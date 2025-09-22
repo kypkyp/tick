@@ -146,20 +146,24 @@ func (t Tick) Every(start, duration int, f func(n int)) {
 }
 
 // State represents a single Tick and a single state string.
-type State struct {
+type State[T Stringer] struct {
 	Tick
-	state string
+	state T
 }
 
-func NewState(initial string) State {
-	return State{state: initial}
+type Stringer interface {
+	String() string
+}
+
+func NewState[T Stringer](initial T) State[T] {
+	return State[T]{state: initial}
 }
 
 // State returns the current state.
-func (s *State) State() string { return s.state }
+func (s *State[T]) State() T { return s.state }
 
 // Change changes the state and resets the Tick.
-func (s *State) Change(name string) {
+func (s *State[T]) Change(name T) {
 	s.state = name
 	s.Reset()
 }

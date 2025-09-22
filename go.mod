@@ -1,3 +1,3 @@
-module github.com/eihigh/tick
+module github.com/kypkyp/tick
 
-go 1.12
+go 1.23.2
